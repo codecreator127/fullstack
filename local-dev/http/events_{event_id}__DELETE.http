@@ -1,0 +1,4 @@
+### delete event by id
+DELETE http://localhost:8080/events/1
+Accept: application/json
+Content-Type: application/json

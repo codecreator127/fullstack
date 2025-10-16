@@ -1,0 +1,166 @@
+openapi: 3.0.1
+info:
+  title: Full Stack Application API
+  description: API documentation for the Full Stack Application
+  version: 1.0.0
+paths:
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get user by ID
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+                
+                
+  /events:
+    get:
+      tags:
+        - Events
+      summary: Get all events
+      operationId: getEvents
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsList'
+    post:
+      tags:
+        - Events
+      summary: Create a new event
+      operationId: createEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+  /events/{id}:
+    get:
+      tags:
+        - Events
+      summary: Get event by ID
+      operationId: getEventById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+                
+    put:
+      tags:
+        - Events
+      summary: Edit event by ID
+      operationId: updateEventById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+                
+    delete:
+      tags:
+        - Events
+      summary: Delete event by ID
+      operationId: deleteEventById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Event deleted successfully
+                
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    EventsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Event'
+        
+    EventRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        videoUrl:
+          type: string
+          
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        imageUrl:
+          type: string
+        videoUrl:
+          type: string

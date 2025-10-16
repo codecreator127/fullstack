@@ -1,0 +1,11 @@
+### create new event
+POST http://localhost:8080/events
+Accept: application/json
+Content-Type: application/json
+
+{
+	"title": "title goes here",
+	"description": "description goes here",
+	"imageUrl": "imge url to s3 bucket",
+	"videoUrl": "videoUrl.com link to s3 bucket"
+}

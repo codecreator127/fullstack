@@ -1,0 +1,12 @@
+### edit event by id
+PUT http://localhost:8080/events/1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "id": 1,
+	"title": "title goes here",
+	"description": "description goes here",
+	"imageUrl": "imge url to s3 bucket",
+	"videoUrl": "videoUrl.com link to s3 bucket"
+}
