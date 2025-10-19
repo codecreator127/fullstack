@@ -1,5 +1,5 @@
-### get all events
-GET http://localhost:8080/users/1
+### get user by username
+GET http://localhost:8080/users/johnl
 Accept: application/json
 Content-Type: application/json
 

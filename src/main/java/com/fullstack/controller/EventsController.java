@@ -3,64 +3,100 @@ package com.fullstack.controller;
 
 import com.fullstack.api.EventsApi;
 import com.fullstack.model.DeleteEventById200Response;
-import com.fullstack.model.Event;
-import com.fullstack.model.EventRequest;
+import com.fullstack.model.EventDto;
+import com.fullstack.model.EventEntry;
+import com.fullstack.service.EventService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 public class EventsController implements EventsApi {
 
+    EventService eventService;
+
     @Override
-    public ResponseEntity<Event> getEventById(Integer eventId) {
-        Event event = new Event();
-        event.setId(eventId);
-        event.setTitle("Sample Event");
-        event.setDescription("This is a sample event description.");
+    public ResponseEntity<EventDto> getEventById(Integer eventId) {
 
+        EventEntry event = eventService.getEventById(eventId.longValue());
 
-        return ResponseEntity.ok(event);
+        EventDto eventDto = new EventDto();
+        eventDto.setId(event.getId().intValue());
+        eventDto.setTitle(event.getTitle());
+        eventDto.setDescription(event.getText());
+        eventDto.setImageUrl(event.getImageUrl());
+        eventDto.setVideoUrl(event.getVideoUrl());
+
+        return ResponseEntity.ok(eventDto);
     }
 
     @Override
-    public ResponseEntity<List<Event>> getEvents() {
-        Event event = new Event();
-        event.setTitle("Sample Event");
-        event.setDescription("All events fetched.");
+    public ResponseEntity<List<EventDto>> getEvents() {
 
-        return ResponseEntity.ok(List.of(event));
+        List<EventEntry> events = eventService.getAllEvents();
+
+        List<EventDto> eventDtos = events.stream().map(event -> {
+            EventDto dto = new EventDto();
+            dto.setId(event.getId().intValue());
+            dto.setTitle(event.getTitle());
+            dto.setDescription(event.getText());
+            dto.setImageUrl(event.getImageUrl());
+            dto.setVideoUrl(event.getVideoUrl());
+            return dto;
+        }).toList();
+
+        return ResponseEntity.ok(eventDtos);
     }
 
     @Override
-    public ResponseEntity<Event> createEvent(EventRequest eventRequest) {
+    public ResponseEntity<EventDto> createEvent(EventDto eventRequest) {
 
-        Event event = new Event();
+        EventEntry event = eventService.createEvent(
+                eventRequest.getTitle(),
+                eventRequest.getDescription(),
+                eventRequest.getVideoUrl(),
+                eventRequest.getImageUrl()
+        );
 
-        event.setTitle("Sample Event");
-        event.setDescription("Event Created.");
+        EventDto eventDto = new EventDto();
+        eventDto.setId(event.getId().intValue());
+        eventDto.setTitle(event.getTitle());
+        eventDto.setDescription(event.getText());
+        eventDto.setImageUrl(event.getImageUrl());
+        eventDto.setVideoUrl(event.getVideoUrl());
 
-        return ResponseEntity.ok(event);
+        return ResponseEntity.ok(eventDto);
     }
 
     @Override
-    public ResponseEntity<Event> updateEventById(Integer id, Event event) {
-        event.setId(1); // Simulate setting an ID for the created event
-        event.setTitle("Sample Event");
-        event.setDescription("Event updated.");
+    public ResponseEntity<EventDto> updateEventById(Integer id, EventDto event) {
+        EventEntry updatedEvent = eventService.updateEvent(
+                id.longValue(),
+                event.getTitle(),
+                event.getDescription(),
+                event.getVideoUrl(),
+                event.getImageUrl()
+        );
+        EventDto eventDto = new EventDto();
+        eventDto.setId(updatedEvent.getId().intValue());
+        eventDto.setTitle(updatedEvent.getTitle());
+        eventDto.setDescription(updatedEvent.getText());
+        eventDto.setImageUrl(updatedEvent.getImageUrl());
+        eventDto.setVideoUrl(updatedEvent.getVideoUrl());
 
-        return ResponseEntity.ok(event);
+        return ResponseEntity.ok(eventDto);
     }
 
     @Override
     public ResponseEntity<DeleteEventById200Response> deleteEventById(Integer id) {
 
-        // get the event, then delete it
+        eventService.deleteEvent(id.longValue());
 
         DeleteEventById200Response response = new DeleteEventById200Response();
         response.setMessage("Event deleted successfully");
         return ResponseEntity.ok(response);
     }
-
 }

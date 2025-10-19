@@ -4,18 +4,18 @@ info:
   description: API documentation for the Full Stack Application
   version: 1.0.0
 paths:
-  /users/{id}:
+  /users/{username}:
     get:
       tags:
         - Users
-      summary: Get user by ID
-      operationId: getUserById
+      summary: Get user by username
+      operationId: getUserByUsername
       parameters:
-        - name: id
+        - name: username
           in: path
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: OK
@@ -130,7 +130,8 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
+          format: uuid
         name:
           type: string
 

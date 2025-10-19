@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
     "id": 1,
-	"title": "title goes here",
+	"title": "title goes here 2",
 	"description": "description goes here",
 	"imageUrl": "imge url to s3 bucket",
 	"videoUrl": "videoUrl.com link to s3 bucket"
