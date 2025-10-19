@@ -22,7 +22,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserDto'
                 
                 
   /events:
@@ -48,14 +48,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EventRequest'
+              $ref: '#/components/schemas/EventDto'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
+                $ref: '#/components/schemas/EventDto'
   /events/{id}:
     get:
       tags:
@@ -74,7 +74,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
+                $ref: '#/components/schemas/EventDto'
                 
     put:
       tags:
@@ -92,14 +92,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Event'
+              $ref: '#/components/schemas/EventDto'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Event'
+                $ref: '#/components/schemas/EventDto'
                 
     delete:
       tags:
@@ -126,7 +126,7 @@ paths:
                 
 components:
   schemas:
-    User:
+    UserDto:
       type: object
       properties:
         id:
@@ -137,21 +137,9 @@ components:
     EventsList:
       type: array
       items:
-        $ref: '#/components/schemas/Event'
-        
-    EventRequest:
-      type: object
-      properties:
-        title:
-          type: string
-        description:
-          type: string
-        imageUrl:
-          type: string
-        videoUrl:
-          type: string
-          
-    Event:
+        $ref: '#/components/schemas/EventDto'
+                  
+    EventDto:
       type: object
       properties:
         id:
