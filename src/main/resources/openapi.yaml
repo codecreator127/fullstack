@@ -25,6 +25,31 @@ paths:
                 $ref: '#/components/schemas/UserDto'
                 
                 
+  /s3/signature:
+    post:
+      tags:
+        - S3
+      summary: Get S3 signed URL
+      operationId: getS3SignedUrl
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/S3SignatureDto'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  signedRequest:
+                    type: string
+                  url:
+                    type: string
+                
   /events:
     get:
       tags:
@@ -152,4 +177,20 @@ components:
         imageUrl:
           type: string
         videoUrl:
+          type: string
+      
+    S3SignatureDto:
+      type: object
+      required:
+        - eventId
+        - fileName
+        - fileType
+      properties:
+        eventId:
+          type: integer
+        fileName:
+          type: string
+        description:
+          type: string
+        fileType:
           type: string

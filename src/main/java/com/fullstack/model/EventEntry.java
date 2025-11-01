@@ -23,7 +23,10 @@ public class EventEntry {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String text;
 
+    @Column(columnDefinition = "TEXT")
     private String imageUrl;
+
+    @Column(columnDefinition = "TEXT")
     private String videoUrl;
 
     @ManyToMany
