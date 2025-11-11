@@ -3,7 +3,86 @@ info:
   title: Full Stack Application API
   description: API documentation for the Full Stack Application
   version: 1.0.0
-paths:
+security:
+  - bearerAuth: []  
+
+paths:  
+  /auth/login:
+    post:
+      security: [] # No authentication required for logout
+      tags:
+        - Authentication
+      summary: User login for JWT
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+  /auth/logout:
+    post:
+      security: [] # No authentication required for logout
+      tags:
+        - Authentication
+      summary: Logout user
+      operationId: logout
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Logout successful
+                    
+  /auth/register:
+    post:
+      security: [] # No authentication required for registration
+      tags:
+        - Authentication
+      summary: User registration for JWT
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+
   /users/{username}:
     get:
       tags:
@@ -23,7 +102,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserDto'
-                
                 
   /s3/signature:
     post:
@@ -150,6 +228,11 @@ paths:
                     example: Event deleted successfully
                 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     UserDto:
       type: object

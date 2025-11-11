@@ -35,10 +35,10 @@ public class EventService {
     public EventEntry updateEvent(Long id, String title, String description, String videoUrl, String imageUrl) {
         EventEntry eventEntry = eventEntryRepository.findById(id).orElse(null);
         if (eventEntry != null) {
-            eventEntry.setTitle(title);
-            eventEntry.setText(description);
-            eventEntry.setVideoUrl(videoUrl);
-            eventEntry.setImageUrl(imageUrl);
+            eventEntry.setTitle(title != null ? title : eventEntry.getTitle());
+            eventEntry.setText(description != null ? description : eventEntry.getText());
+            eventEntry.setVideoUrl(videoUrl != null ? videoUrl : eventEntry.getVideoUrl());
+            eventEntry.setImageUrl(imageUrl != null ? imageUrl : eventEntry.getImageUrl());
             return eventEntryRepository.save(eventEntry);
         }
         return null;
